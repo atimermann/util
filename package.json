@@ -1,0 +1,22 @@
+{
+  "name": "@agtm/utils",
+  "version": "1.0.0",
+  "description": "Funções uteis",
+  "main": "index.mjs",
+  "scripts": {
+    "publish-patch": "npm version patch && npm publish --access public",
+    "publish-minor": "npm version minor && npm publish --access public",
+    "publish-major": "npm version major && npm publish --access public",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "André Timermann <andre@timermann.com.br> (http://andre.timermann.com.br/)",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/atimermann/utils.git"
+  },
+  "bugs": {
+    "url": "https://github.com/atimermann/utils/issues"
+  },
+  "homepage": "https://github.com/atimermann/utils#readme"
+}
