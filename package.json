@@ -18,5 +18,14 @@
   "bugs": {
     "url": "https://github.com/atimermann/utils/issues"
   },
-  "homepage": "https://github.com/atimermann/utils#readme"
+  "homepage": "https://github.com/atimermann/utils#readme",
+  "engines": {
+    "node": ">=14.17"
+  }
 }
+
+
+
+
+
+
