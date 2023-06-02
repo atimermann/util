@@ -10,6 +10,7 @@ import { fileURLToPath } from 'url'
 import { dirname } from 'path'
 import { readFile } from 'fs/promises'
 import spawn from './src/child-process/spawn.mjs'
+import prompt from './src/prompt/index.mjs'
 
 export function __dirname (importMetaURL) {
   return dirname(fileURLToPath(importMetaURL))
@@ -41,3 +42,5 @@ export { spawn }
 // -----------------------------------------------------------------
 // Inquirer Prompt
 // -----------------------------------------------------------------
+
+export { prompt }
