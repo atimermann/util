@@ -33,5 +33,9 @@
   },
   "dependencies": {
     "inquirer": "^9.2.6"
-  }
+  },
+  "files": [
+    "src",
+    "index.mjs"
+  ]
 }
