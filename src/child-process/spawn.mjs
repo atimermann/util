@@ -8,9 +8,9 @@
 import parseCommand from '../parse-command.mjs'
 import { spawn as processSpawn } from 'child_process'
 
-export default function spawn (command) {
+export default function spawn (commandText) {
   return new Promise((resolve, reject) => {
-    const [command, args] = parseCommand(command)
+    const [command, args] = parseCommand(commandText)
 
     const pHandler = processSpawn(command, args, { shell: true })
 
