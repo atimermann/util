@@ -6,10 +6,12 @@
  *
  */
 
+// TODO: @deprecated, usar o método abaixo como no checkbos
 import inquirer from 'inquirer'
 
-export default {
+import checkbox from '@inquirer/checkbox'
 
+export default {
 
   /**
    * This method provides a shortcut to create a list (radio-box style) prompt using Inquirer.js.
@@ -43,6 +45,14 @@ export default {
     const answers = await inquirer.prompt(questions)
 
     return answers.choices
-  }
+  },
 
+  async checkbox (question, choices, checked = [], checkedAll = false) {
+    return await checkbox({
+      message: question,
+      choices: choices.map(c => {
+        return { name: c, value: c, checked: checkedAll || checked.includes(c) }
+      })
+    })
+  }
 }
