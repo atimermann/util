@@ -1,5 +1,5 @@
 {
-  "name": "@agtm/utils",
+  "name": "@agtm/util",
   "version": "1.0.1",
   "description": "Funções uteis",
   "main": "index.mjs",
@@ -7,9 +7,11 @@
     "publish-patch": "npm version patch && npm publish --access public",
     "publish-minor": "npm version minor && npm publish --access public",
     "publish-major": "npm version major && npm publish --access public",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --detectOpenHandles",
+    "lint:test": "npx eslint .",
+    "lint": "npx eslint --fix ."
   },
-  "author": "André Timermann <andre@timermann.com.br> (http://andre.timermann.com.br/)",
+  "author": "André Timermann <andre@timermann.com.br> (https://andre.timermann.com.br/)",
   "license": "ISC",
   "repository": {
     "type": "git",
@@ -21,11 +23,15 @@
   "homepage": "https://github.com/atimermann/utils#readme",
   "engines": {
     "node": ">=14.17"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.2",
+    "eslint": "^8.41.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-jest": "^27.2.1",
+    "jest": "^29.5.0"
+  },
+  "dependencies": {
+    "inquirer": "^9.2.6"
   }
 }
-
-
-
-
-
-
