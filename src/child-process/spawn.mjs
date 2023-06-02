@@ -8,6 +8,26 @@
 import parseCommand from '../parse-command.mjs'
 import { spawn as processSpawn } from 'child_process'
 
+/**
+ * Executes a given command in a shell and buffers the output. This function makes use of Node.js child_process.spawn method.
+ *
+ * This function takes a command as a string, parses it, then spawns a child process using the parsed command and arguments.
+ * It handles stdout and stderr data events by writing any received data to the corresponding process streams.
+ * Additionally, it handles the child process close event and resolves or rejects the returned promise depending on the exit code.
+ *
+ * A listener for the 'SIGINT' event is also attached to the process, which kills the child process when 'SIGINT' is received.
+ * This allows graceful shutdown of the child process when the main process receives an interrupt signal.
+ *
+ * @example
+ *
+ * spawn('echo "Hello, World!"')
+ *  .then(code => console.log(`Child process exited with code ${code}`))
+ *  .catch(code => console.error(`Child process exited with code ${code}`));
+ *
+ * @param {string} commandText - The command to be executed in the shell.
+ * @returns {Promise<number>} - A Promise that resolves to the exit code of the child process when it finishes
+ *  successfully, or rejects with the exit code when it finishes with an error.
+ */
 export default function spawn (commandText) {
   return new Promise((resolve, reject) => {
     const [command, args] = parseCommand(commandText)
@@ -30,13 +50,12 @@ export default function spawn (commandText) {
       if (code === 0) {
         resolve(code)
       } else {
-        console.error(`child process exited with code ${code}`)
         reject(code)
       }
     })
 
     process.once('SIGINT', function () {
-      console.log('Caught interrupt signal')
+      console.log('SPAWN: Caught interrupt signal')
       pHandler.kill('SIGINT')
     })
   })
