@@ -34,5 +34,10 @@ export default function spawn (commandText) {
         reject(code)
       }
     })
+
+    process.on('SIGINT', function () {
+      console.log('Caught interrupt signal')
+      pHandler.kill('SIGINT')
+    })
   })
 }
