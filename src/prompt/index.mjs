@@ -47,6 +47,25 @@ export default {
     return answers.choices
   },
 
+  /**
+   * This method provides a shortcut to create a checkbox-style prompt using Inquirer.js and @inquirer/checkbox.
+   * Given a question (a string) and an array of choices, it displays the prompt to the user and returns
+   * an array of the user's selected options.
+   *
+   * The promise returned by this method is resolved when the user selects their options and submits the form.
+   * The resolved value is an array of the selected choices.
+   *
+   * @example
+   *
+   * checkbox('Which colours do you like?', ['Red', 'Green', 'Blue'])
+   *  .then(choices => console.log(`You selected: ${choices.join(', ')}`));
+   *
+   * @param {string} question - The question to display to the user.
+   * @param {string[]} choices - An array of choices to present to the user.
+   * @param {string[]} [checked = []] - An array of choices that should be pre-selected.
+   * @param {boolean} [checkedAll = false] - Whether all choices should be pre-selected.
+   * @returns {Promise<string[]>} - A Promise that resolves to an array of the selected choices.
+   */
   async checkbox (question, choices, checked = [], checkedAll = false) {
     return await checkbox({
       message: question,

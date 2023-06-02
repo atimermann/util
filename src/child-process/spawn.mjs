@@ -35,7 +35,7 @@ export default function spawn (commandText) {
       }
     })
 
-    process.on('SIGINT', function () {
+    process.once('SIGINT', function () {
       console.log('Caught interrupt signal')
       pHandler.kill('SIGINT')
     })
