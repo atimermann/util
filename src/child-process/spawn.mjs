@@ -25,14 +25,20 @@ import { spawn as processSpawn } from 'child_process'
  *  .catch(code => console.error(`Child process exited with code ${code}`));
  *
  * @param {string} commandText - The command to be executed in the shell.
+ * @param {object}  env  Environment key-value pairs
+ * .
  * @returns {Promise<number>} - A Promise that resolves to the exit code of the child process when it finishes
  *  successfully, or rejects with the exit code when it finishes with an error.
  */
-export default function spawn (commandText) {
+export default function spawn (commandText, env = {}) {
   return new Promise((resolve, reject) => {
     const [command, args] = parseCommand(commandText)
 
-    const pHandler = processSpawn(command, args, { shell: true })
+    const pHandler = processSpawn(
+      command,
+      args,
+      { shell: true, env: Object.assign({}, process.env, env) }
+    )
 
     pHandler.stdout.on('data', (data) => {
       process.stdout.write(data.toString())
@@ -43,7 +49,7 @@ export default function spawn (commandText) {
     })
 
     pHandler.on('error', (error) => {
-      process.stdout.write(JSON.stringify(error, undefined, ' '))
+      process.stderr.write(JSON.stringify(error, undefined, ' '))
     })
 
     pHandler.on('close', (code) => {
