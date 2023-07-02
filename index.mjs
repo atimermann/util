@@ -9,13 +9,10 @@
 import { fileURLToPath } from 'url'
 import { dirname } from 'path'
 import { readFile } from 'fs/promises'
-import spawn from './src/child-process/spawn.mjs'
 
 // -----------------------------------------------------------------
 // Inquirer Prompt
 // -----------------------------------------------------------------
-
-import * as prompt from './src/prompt/index.mjs'
 
 export function __dirname (importMetaURL) {
   return dirname(fileURLToPath(importMetaURL))
@@ -37,10 +34,3 @@ export async function parseCommand (commandString) {
 
   return [command, args]
 }
-
-// -----------------------------------------------------------------
-// Child Process
-// -----------------------------------------------------------------
-
-export { spawn }
-export { prompt }

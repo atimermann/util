@@ -2,7 +2,10 @@
   "name": "@agtm/util",
   "version": "3.0.1",
   "description": "Funções uteis",
-  "main": "index.mjs",
+  "exports": {
+    "./prompts": "./src/prompts",
+    "./child-process": "./src/child-process"
+  },
   "scripts": {
     "publish-patch": "npm version patch && npm publish --access public && git push",
     "publish-minor": "npm version minor && npm publish --access public && git push",
