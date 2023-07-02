@@ -1,6 +1,6 @@
 {
   "name": "@agtm/util",
-  "version": "3.0.4",
+  "version": "3.0.5",
   "description": "Funções uteis",
   "exports": {
     "./prompt": "./src/prompt/index.mjs",
