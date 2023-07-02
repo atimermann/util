@@ -11,7 +11,7 @@
     "publish-patch": "npm version patch && npm publish --access public && git push",
     "publish-minor": "npm version minor && npm publish --access public && git push",
     "publish-major": "npm version major && npm publish --access public && git push",
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --detectOpenHandles",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --detectOpenHandles && npm run lint:test",
     "lint:test": "npx eslint .",
     "lint": "npx eslint --fix ."
   },
