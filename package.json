@@ -2,10 +2,7 @@
   "name": "@agtm/util",
   "version": "3.0.2",
   "description": "Funções uteis",
-  "exports": {
-    "./prompts": "./src/prompts",
-    "./child-process": "./src/child-process"
-  },
+  "main": "src/index.mjs",
   "scripts": {
     "publish-patch": "npm version patch && npm publish --access public && git push",
     "publish-minor": "npm version minor && npm publish --access public && git push",
@@ -29,9 +26,9 @@
   },
   "devDependencies": {
     "@types/jest": "^29.5.2",
-    "eslint": "^8.41.0",
+    "eslint": "^8.44.0",
     "eslint-config-standard": "^17.1.0",
-    "eslint-plugin-jest": "^27.2.1",
+    "eslint-plugin-jest": "^27.2.2",
     "jest": "^29.5.0",
     "mock-stdin": "^1.0.0"
   },

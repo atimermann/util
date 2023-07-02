@@ -12,8 +12,10 @@ import { spawn as processSpawn } from 'child_process'
  * Executes a given command in a shell and buffers the output. This function makes use of Node.js child_process.spawn method.
  *
  * This function takes a command as a string, parses it, then spawns a child process using the parsed command and arguments.
- * It handles stdout and stderr data events by writing any received data to the corresponding process streams.
+ * It handles stdout and stderr data events by writing any received data to the corresponding process streams and accumulating
+ * them in a string to be returned when the child process ends.
  * Additionally, it handles the child process close event and resolves or rejects the returned promise depending on the exit code.
+ * The resolved or rejected value is an object containing the exit code, and the contents of stdout and stderr.
  *
  * A listener for the 'SIGINT' event is also attached to the process, which kills the child process when 'SIGINT' is received.
  * This allows graceful shutdown of the child process when the main process receives an interrupt signal.
@@ -21,18 +23,28 @@ import { spawn as processSpawn } from 'child_process'
  * @example
  *
  * spawn('echo "Hello, World!"')
- *  .then(code => console.log(`Child process exited with code ${code}`))
- *  .catch(code => console.error(`Child process exited with code ${code}`));
+ *  .then(({ code, stdout, stderr }) => {
+ *    console.log(`Child process exited with code ${code}`);
+ *    console.log(`stdout: ${stdout}`);
+ *    console.log(`stderr: ${stderr}`);
+ *  })
+ *  .catch(({ code, stdout, stderr }) => {
+ *    console.error(`Child process exited with code ${code}`);
+ *    console.error(`stdout: ${stdout}`);
+ *    console.error(`stderr: ${stderr}`);
+ *  });
  *
  * @param {string} commandText - The command to be executed in the shell.
- * @param {object}  env  Environment key-value pairs
- * .
- * @returns {Promise<number>} - A Promise that resolves to the exit code of the child process when it finishes
- *  successfully, or rejects with the exit code when it finishes with an error.
+ * @param {object} env - Optional environment key-value pairs to be passed to the child process.
+ *
+ * @returns {Promise<object>} - A Promise that resolves to an object containing the exit code and the contents of stdout and stderr
+ *  of the child process when it finishes successfully, or rejects with the same object when it finishes with an error.
  */
-export default function spawn (commandText, env = {}) {
+export function spawn (commandText, env = {}) {
   return new Promise((resolve, reject) => {
     const [command, args] = parseCommand(commandText)
+    let stdout = ''
+    let stderr = ''
 
     const pHandler = processSpawn(
       command,
@@ -41,10 +53,12 @@ export default function spawn (commandText, env = {}) {
     )
 
     pHandler.stdout.on('data', (data) => {
+      stdout += data.toString()
       process.stdout.write(data.toString())
     })
 
     pHandler.stderr.on('data', (data) => {
+      stderr += data.toString()
       process.stderr.write(data.toString())
     })
 
@@ -54,9 +68,9 @@ export default function spawn (commandText, env = {}) {
 
     pHandler.on('close', (code) => {
       if (code === 0) {
-        resolve(code)
+        resolve({ code, stdout, stderr })
       } else {
-        reject(code)
+        reject(new Error(code))
       }
     })
 

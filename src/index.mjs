@@ -10,6 +10,10 @@ import { fileURLToPath } from 'url'
 import { dirname } from 'path'
 import { readFile } from 'fs/promises'
 
+// -----------------------------------------------------------------
+// Inquirer Prompt
+// -----------------------------------------------------------------
+
 export function __dirname (importMetaURL) {
   return dirname(fileURLToPath(importMetaURL))
 }
@@ -30,3 +34,6 @@ export async function parseCommand (commandString) {
 
   return [command, args]
 }
+
+export * as prompt from './prompt/index.mjs'
+export * as childProcess from './child-process/index.mjs'

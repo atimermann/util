@@ -6,7 +6,7 @@
  *
  */
 
-import { input as inquirerInput, checkbox as inquirerCheckbox } from '@inquirer/prompts'
+import { input as inquirerInput, checkbox as inquirerCheckbox, select as inquirerSelect } from '@inquirer/prompts'
 
 /**
  * This method provides a shortcut to create an input prompt using Inquirer.js.
@@ -15,6 +15,8 @@ import { input as inquirerInput, checkbox as inquirerCheckbox } from '@inquirer/
  *
  * The promise returned by this method is resolved when the user enters a value. The resolved value
  * is the user's input as a string.
+ *
+ * https://github.com/SBoudrias/Inquirer.js/tree/master/packages/input
  *
  * @example
  *
@@ -26,16 +28,7 @@ import { input as inquirerInput, checkbox as inquirerCheckbox } from '@inquirer/
  * @returns {Promise<string>} - A Promise that resolves to the user's input as a string.
  */
 export async function input (question, defaultAnswer) {
-  const questions = [{
-    type: 'input',
-    name: 'prompt',
-    message: question,
-    default: defaultAnswer
-  }]
-
-  const answers = await inquirerInput(questions)
-
-  return answers.prompt
+  return inquirerInput({ message: question, default: defaultAnswer })
 }
 
 /**
@@ -46,29 +39,24 @@ export async function input (question, defaultAnswer) {
  * The promise returned by this method is resolved when the user selects an option. The resolved value
  * is the index of the selected option in the provided choices array.
  *
+ * https://github.com/SBoudrias/Inquirer.js/tree/master/packages/select
+ *
  * @example
  *
- * const index = await choices('What is your favorite color?', ['Red', 'Green', 'Blue']);
+ * const index = await select('What is your favorite color?', ['Red', 'Green', 'Blue']);
  * console.log(`You selected option ${index}`);
  *
  * @param {string} question - The question to display to the user.
  * @param {string[]} choices - An array of choices to present to the user.
  * @returns {Promise<number>} - A Promise that resolves to the index of the selected choice in the provided array.
  */
-export async function choices (question, choices) {
-  const questions = [{
-    type: 'list',
-    name: 'choices',
+export async function select (question, choices) {
+  return inquirerSelect({
     message: question,
-    choices,
-    filter: function (val) {
-      return choices.indexOf(val)
-    }
-  }]
-
-  const answers = await inquirer.prompt(questions)
-
-  return answers.choices
+    choices: choices.map(c => {
+      return { name: c, value: c }
+    })
+  })
 }
 
 /**
@@ -79,6 +67,8 @@ export async function choices (question, choices) {
  * The promise returned by this method is resolved when the user selects their options and submits the form.
  * The resolved value is an array of the selected choices.
  *
+ * https://github.com/SBoudrias/Inquirer.js/tree/master/packages/checkbox
+ *
  * @example
  *
  * const choices = await checkbox('Which colors do you like?', ['Red', 'Green', 'Blue']);
@@ -88,10 +78,11 @@ export async function choices (question, choices) {
  * @param {string[]} choices - An array of choices to present to the user.
  * @param {string[]} [checked = []] - An array of choices that should be pre-selected.
  * @param {boolean} [checkedAll = false] - Whether all choices should be pre-selected.
+ *
  * @returns {Promise<string[]>} - A Promise that resolves to an array of the selected choices.
  */
 export async function checkbox (question, choices, checked = [], checkedAll = false) {
-  return await inquirerCheckbox({
+  return inquirerCheckbox({
     message: question,
     choices: choices.map(c => {
       return { name: c, value: c, checked: checkedAll || checked.includes(c) }
