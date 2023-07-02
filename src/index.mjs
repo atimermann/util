@@ -34,6 +34,3 @@ export async function parseCommand (commandString) {
 
   return [command, args]
 }
-
-export * as prompt from './prompt/index.mjs'
-export * as childProcess from './child-process/index.mjs'

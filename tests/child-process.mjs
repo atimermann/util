@@ -5,7 +5,7 @@
  * @author André Timermann <andre@timermann.com.br>
  *
  */
-import { spawn } from '../src/child-process/index.mjs'
+import { spawn } from '../src/process/index.mjs'
 
 describe('spawn', () => {
   test('should execute a command and return correct stdout, stderr and exit code', async (done) => {

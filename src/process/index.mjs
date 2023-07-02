@@ -40,7 +40,7 @@ import { spawn as processSpawn } from 'child_process'
  * @returns {Promise<object>} - A Promise that resolves to an object containing the exit code and the contents of stdout and stderr
  *  of the child process when it finishes successfully, or rejects with the same object when it finishes with an error.
  */
-export function spawn (commandText, env = {}) {
+export async function spawn (commandText, env = {}) {
   return new Promise((resolve, reject) => {
     const [command, args] = parseCommand(commandText)
     let stdout = ''

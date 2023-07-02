@@ -24,11 +24,16 @@ import { input as inquirerInput, checkbox as inquirerCheckbox, select as inquire
  * console.log(`Hello, ${answer}!`);
  *
  * @param {string} question - The question to display to the user.
- * @param {string} defaultAnswer - The default answer to display in the input field.
+ * @param {string} [defaultAnswer=undefined] - The default answer to display in the input field.
+ * @param required
  * @returns {Promise<string>} - A Promise that resolves to the user's input as a string.
  */
-export async function input (question, defaultAnswer) {
-  return inquirerInput({ message: question, default: defaultAnswer })
+export async function input (question, defaultAnswer, required = true) {
+  return inquirerInput({
+    message: question,
+    default: defaultAnswer,
+    validate: (a) => !(required && !a)
+  })
 }
 
 /**
