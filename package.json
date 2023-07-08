@@ -3,6 +3,7 @@
   "version": "4.0.0",
   "description": "Funções uteis",
   "exports": {
+    ".": "./src/index.mjs",
     "./prompt": "./src/prompt/index.mjs",
     "./process": "./src/process/index.mjs"
   },
