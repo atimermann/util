@@ -47,3 +47,22 @@ export async function parseCommand (commandString) {
 export async function sleep (ms) {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
+
+/**
+ * Asynchronously generates and returns the current stack trace.
+ *
+ * This function creates a new Error object, extracts its stack trace,
+ * and processes the stack trace to remove the first line (which would
+ * indicate this function as the source of the Error).
+ *
+ * @returns {Promise<String>} A promise that resolves with a string representing the stack trace.
+ *
+ * @example
+ *
+ *  import { stacktrace } from '@agtm/util';
+ *  console.log(stacktrace());
+ */
+export async function stacktrace () {
+  const stack = new Error().stack
+  return stack.split('\n').slice(1).join('\n')
+}

@@ -5,14 +5,15 @@
   "exports": {
     ".": "./src/index.mjs",
     "./prompt": "./src/prompt/index.mjs",
-    "./process": "./src/process/index.mjs"
+    "./process": "./src/process/index.mjs",
+    "./multi": "./src/multi.mjs"
   },
   "main": "src/index.mjs",
   "scripts": {
-    "publish-patch": "npm version patch && npm publish --access public && git push",
-    "publish-minor": "npm version minor && npm publish --access public && git push",
-    "publish-major": "npm version major && npm publish --access public && git push",
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --detectOpenHandles && npm run lint:test",
+    "publish-patch": "npm test && npm version patch && npm publish --access public && git push",
+    "publish-minor": "npm test && npm version minor && npm publish --access public && git push",
+    "publish-major": "npm test && npm version major && npm publish --access public && git push",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --detectOpenHandles && npm run lint",
     "lint:test": "npx eslint .",
     "lint": "npx eslint --fix ."
   },
