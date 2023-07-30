@@ -15,7 +15,7 @@ Para usar a classe `Multi`, você deve seguir os seguintes passos:
 1. Importe a classe `Multi` no seu código.
 
 ```javascript
-import Multi from '@agtm/util'; // Ajuste o caminho do import de acordo com sua estrutura de arquivos
+import { Multi } from '@agtm/util'; // Ajuste o caminho do import de acordo com sua estrutura de arquivos
 ```
 
 2. Crie as classes base que você deseja usar.

@@ -9,6 +9,7 @@
 import { fileURLToPath } from 'url'
 import { dirname } from 'path'
 import { readFile } from 'fs/promises'
+import Multi from './multi.mjs'
 
 export function __dirname (importMetaURL) {
   return dirname(fileURLToPath(importMetaURL))
@@ -66,3 +67,5 @@ export async function stacktrace () {
   const stack = new Error().stack
   return stack.split('\n').slice(1).join('\n')
 }
+
+export { Multi }
