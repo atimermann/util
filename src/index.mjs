@@ -62,10 +62,26 @@ export async function sleep (ms) {
  *
  *  import { stacktrace } from '@agtm/util';
  *  console.log(stacktrace());
- */
+*/
 export async function stacktrace () {
   const stack = new Error().stack
   return stack.split('\n').slice(1).join('\n')
+}
+
+/**
+ * Calculates and returns the percentage of progress based on defined intervals.
+ *
+ * @param {number} currentCount - The current count.
+ * @param {Array} items - Array of items being processed.
+ * @param {number} [step=10] - Interval at which to calculate the percentage.
+ * @param {Function} [callback] - Optional callback function to handle the percentage message.
+ */
+export default function calculateProgressPercentage (currentCount, items, step = 10, callback = undefined) {
+  const divisionFactor = Math.floor(items.length / step)
+  if (currentCount % divisionFactor === 0) {
+    const percentage = (currentCount / items.length) * 100
+    callback ? callback(percentage) : console.log(`${percentage}%`)
+  }
 }
 
 export { Multi }
