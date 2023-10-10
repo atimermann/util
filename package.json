@@ -5,7 +5,8 @@
   "exports": {
     ".": "./src/index.mjs",
     "./prompt": "./src/prompt/index.mjs",
-    "./process": "./src/process/index.mjs"
+    "./process": "./src/process/index.mjs",
+    "./nuxt": "./src/nuxt/index.mjs"
   },
   "main": "src/index.mjs",
   "scripts": {
