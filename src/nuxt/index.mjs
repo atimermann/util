@@ -9,6 +9,7 @@
 import snakeCase from 'lodash/snakeCase.js'
 
 // initialize RunTimeConfig (Only works with nuxt 3)
+// eslint-disable-next-line no-undef
 const config = useRuntimeConfig()
 
 /**
@@ -19,10 +20,10 @@ const config = useRuntimeConfig()
  * @returns {Promise<void>}
  */
 export function getEnvConfig (attributeName, required = true) {
-
   const envConfig = config.public[attributeName]
 
   if (!envConfig && required) {
+    // eslint-disable-next-line no-undef
     throw showError({
       statusCode: 500,
       statusMessage: `Environment variable "NUXT_PUBLIC_${snakeCase(attributeName).toUpperCase()}" not defined in env file.`
