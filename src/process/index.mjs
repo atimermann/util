@@ -37,10 +37,11 @@ import { spawn as processSpawn } from 'child_process'
  * @param {string} commandText - The command to be executed in the shell.
  * @param {object} env - Optional environment key-value pairs to be passed to the child process.
  *
+ * @param {boolean} quiet - Does not print to the console
  * @returns {Promise<object>} - A Promise that resolves to an object containing the exit code and the contents of stdout and stderr
  *  of the child process when it finishes successfully, or rejects with the same object when it finishes with an error.
  */
-export async function spawn (commandText, env = {}) {
+export async function spawn (commandText, env = {}, quiet = false) {
   return new Promise((resolve, reject) => {
     const [command, args] = parseCommand(commandText)
     let stdout = ''
@@ -54,16 +55,16 @@ export async function spawn (commandText, env = {}) {
 
     pHandler.stdout.on('data', (data) => {
       stdout += data.toString()
-      process.stdout.write(data.toString())
+      if (!quiet) process.stdout.write(data.toString())
     })
 
     pHandler.stderr.on('data', (data) => {
       stderr += data.toString()
-      process.stderr.write(data.toString())
+      if (!quiet) process.stderr.write(data.toString())
     })
 
     pHandler.on('error', (error) => {
-      process.stderr.write(JSON.stringify(error, undefined, ' '))
+      if (!quiet) process.stderr.write(JSON.stringify(error, undefined, ' '))
     })
 
     pHandler.on('close', (code) => {
@@ -75,7 +76,7 @@ export async function spawn (commandText, env = {}) {
     })
 
     process.once('SIGINT', function () {
-      console.log('SPAWN: Caught interrupt signal')
+      if (!quiet) console.log('SPAWN: Caught interrupt signal')
       pHandler.kill('SIGINT')
     })
   })
