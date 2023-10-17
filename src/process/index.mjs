@@ -64,6 +64,8 @@ export async function spawn (commandText, env = {}, quiet = false) {
     })
 
     pHandler.on('error', (error) => {
+      //TODO: check stderr += error
+      // error.toString()
       if (!quiet) process.stderr.write(JSON.stringify(error, undefined, ' '))
     })
 
@@ -71,7 +73,7 @@ export async function spawn (commandText, env = {}, quiet = false) {
       if (code === 0) {
         resolve({ code, stdout, stderr })
       } else {
-        reject(new Error(code))
+        reject({ code, stdout, stderr })
       }
     })
 
